@@ -3,154 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickNotes Dashboard</title>
+    <title>Easy Python Browser App</title>
+    <!-- CSS styles for basic presentation -->
     <style>
-        :root {
-            --bg: #f4f7f6;
-            --card: #ffffff;
-            --text: #333333;
-            --primary: #4a90e2;
-            --danger: #e74c3c;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 500px;
-            background: var(--card);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        h1 {
-            margin-top: 0;
-            font-size: 24px;
-            text-align: center;
-            color: #2c3e50;
-        }
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-        }
-        button:hover {
-            opacity: 0.9;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: #f9f9f9;
-            margin-bottom: 8px;
-            border-radius: 6px;
-            border-left: 4px solid var(--primary);
-            animation: fadeIn 0.3s ease;
-        }
-        .delete-btn {
-            background-color: var(--danger);
-            padding: 6px 12px;
-            font-size: 14px;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; max-width: 400px; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 15px; }
+        button:hover { background-color: #0056b3; }
+        #quote { font-style: italic; font-size: 18px; color: #333; min-height: 50px; }
     </style>
+    <!-- Link PyScript assets so Python can execute in the browser -->
+    <link rel="stylesheet" href="https://pyscript.net" />
+    <script type="module" src="https://pyscript.net"></script>
 </head>
 <body>
 
-<div class="container">
-    <h1>📝 QuickNotes</h1>
-    <div class="input-group">
-        <input type="text" id="noteInput" placeholder="Write a note or task...">
-        <button onclick="addNote()">Add</button>
+    <div class="card">
+        <h2>Python Quote Generator</h2>
+        <p id="quote">Loading Python environment...</p>
+        <button id="btn" py-click="generate_quote">New Quote</button>
     </div>
-    <ul id="notesList"></ul>
-</div>
 
-<script>
-    // Load existing items on startup
-    document.addEventListener("DOMContentLoaded", loadNotes);
+    <!-- Your actual Python logic goes inside this tag -->
+    <script type="py">
+        import random
+        from pyscript import document
 
-    const noteInput = document.getElementById("noteInput");
-    const notesList = document.getElementById("notesList");
+        quotes = [
+            "The only way to do great work is to love what you do. - Steve Jobs",
+            "Progress, not perfection. - Unknown",
+            "Python is execution executable pseudocode. - Bruce Eckel",
+            "Simplicity is better than complex. - The Zen of Python",
+            "Code is like humor. When you have to explain it, it’s bad. - Cory House"
+        ]
 
-    // Add note on Enter press
-    noteInput.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") addNote();
-    });
+        def generate_quote(event):
+            # Select a random quote and update the HTML paragraph tag
+            selected = random.choice(quotes)
+            document.querySelector("#quote").innerText = selected
 
-    function addNote() {
-        const text = noteInput.value.trim();
-        if (!text) return;
-
-        const notes = getLocalStorage();
-        notes.push(text);
-        localStorage.setItem("notes", JSON.stringify(notes));
-
-        renderNoteElement(text);
-        noteInput.value = "";
-    }
-
-    function deleteNote(element, text) {
-        let notes = getLocalStorage();
-        notes = notes.filter(note => note !== text);
-        localStorage.setItem("notes", JSON.stringify(notes));
-        element.parentElement.remove();
-    }
-
-    function loadNotes() {
-        const notes = getLocalStorage();
-        notes.forEach(note => renderNoteElement(note));
-    }
-
-    function renderNoteElement(text) {
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <span>${escapeHTML(text)}</span>
-            <button class="delete-btn" onclick="deleteNote(this, '${text.replace(/'/g, "\\'")}')">✕</button>
-        `;
-        notesList.appendChild(li);
-    }
-
-    function getLocalStorage() {
-        return JSON.parse(localStorage.getItem("notes")) || [];
-    }
-
-    function escapeHTML(str) {
-        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    }
-</script>
+        # Run once on initial page load
+        generate_quote(None)
+    </script>
 
 </body>
 </html>
