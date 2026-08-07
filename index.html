@@ -3,233 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payslip Tracker</title>
+    <title>Hebrew Learning</title>
     <style>
-        :root {
-            color-scheme: light;
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --bg: #f3f4f6;
-            --card: #ffffff;
-            --text: #111827;
-            --muted: #6b7280;
-            --border: #d1d5db;
-        }
-
-        * { box-sizing: border-box; }
-
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
+            background: #f5f7fb;
             display: flex;
             justify-content: center;
-            padding: 24px;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .app {
-            width: 100%;
-            max-width: 900px;
-            background: var(--card);
+        .container {
+            background: white;
+            padding: 32px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
         }
 
         h1 {
             margin-top: 0;
-            margin-bottom: 8px;
+            margin-bottom: 24px;
+            font-size: 24px;
         }
 
-        .subtitle {
-            color: var(--muted);
-            margin-bottom: 20px;
-        }
-
-        .grid {
-            display: grid;
-            gap: 20px;
-            grid-template-columns: 1fr 1.2fr;
-        }
-
-        .panel {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-        }
-
-        form {
-            display: grid;
-            gap: 12px;
-        }
-
-        label {
-            display: grid;
-            gap: 6px;
-            font-weight: 600;
-        }
-
-        input {
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
+        .button-row {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
         button {
-            padding: 10px 14px;
+            padding: 14px 18px;
             border: none;
-            border-radius: 8px;
-            background: var(--primary);
+            border-radius: 10px;
+            background: #2563eb;
             color: white;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
         }
 
         button:hover {
-            background: var(--primary-dark);
-        }
-
-        .summary {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            color: var(--muted);
-            font-size: 13px;
-            text-transform: uppercase;
-        }
-
-        .empty {
-            color: var(--muted);
-            padding: 16px 0;
-        }
-
-        @media (max-width: 760px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
+            background: #1d4ed8;
         }
     </style>
 </head>
 <body>
-    <div class="app">
-        <h1>Payslip Tracker</h1>
-        <p class="subtitle">Add each payslip entry with its date, amount, and category.</p>
-
-        <div class="grid">
-            <section class="panel">
-                <form id="payslipForm">
-                    <label>
-                        Date
-                        <input type="date" id="date" required>
-                    </label>
-                    <label>
-                        Cost
-                        <input type="number" id="cost" step="0.01" min="0" placeholder="0.00" required>
-                    </label>
-                    <label>
-                        Category
-                        <input type="text" id="category" placeholder="e.g. Salary, Bonus, Bills" required>
-                    </label>
-                    <button type="submit">Add payslip</button>
-                </form>
-            </section>
-
-            <section class="panel">
-                <div class="summary" id="summary">Total: R0.00</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Cost</th>
-                            <th>Category</th>
-                        </tr>
-                    </thead>
-                    <tbody id="entriesBody">
-                        <tr>
-                            <td colspan="3" class="empty">No payslip entries yet.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+    <div class="container">
+        <h1>Hebrew Learning</h1>
+        <div class="button-row">
+            <button type="button">Hebrew letters quiz</button>
+            <button type="button">Hebrew letters read</button>
         </div>
     </div>
-
-    <script>
-        const form = document.getElementById('payslipForm');
-        const dateInput = document.getElementById('date');
-        const costInput = document.getElementById('cost');
-        const categoryInput = document.getElementById('category');
-        const entriesBody = document.getElementById('entriesBody');
-        const summary = document.getElementById('summary');
-
-        const storageKey = 'payslipEntries';
-        let entries = JSON.parse(localStorage.getItem(storageKey) || '[]');
-
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('en-ZA', {
-                style: 'currency',
-                currency: 'ZAR'
-            }).format(value);
-        }
-
-        function renderEntries() {
-            if (entries.length === 0) {
-                entriesBody.innerHTML = '<tr><td colspan="3" class="empty">No payslip entries yet.</td></tr>';
-                summary.textContent = 'Total: ' + formatCurrency(0);
-                return;
-            }
-
-            const total = entries.reduce((sum, entry) => sum + Number(entry.cost), 0);
-            summary.textContent = 'Total: ' + formatCurrency(total);
-
-            entriesBody.innerHTML = entries.map(entry => `
-                <tr>
-                    <td>${entry.date}</td>
-                    <td>${formatCurrency(Number(entry.cost))}</td>
-                    <td>${entry.category}</td>
-                </tr>
-            `).join('');
-        }
-
-        function saveEntries() {
-            localStorage.setItem(storageKey, JSON.stringify(entries));
-        }
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const entry = {
-                id: Date.now(),
-                date: dateInput.value,
-                cost: parseFloat(costInput.value).toFixed(2),
-                category: categoryInput.value.trim()
-            };
-
-            entries.unshift(entry);
-            saveEntries();
-            renderEntries();
-            form.reset();
-            dateInput.focus();
-        });
-
-        renderEntries();
-    </script>
 </body>
 </html>
