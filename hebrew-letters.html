@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hebrew Letters</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            display: flex;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .page {
+            background: white;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .alphabet-list {
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+
+        .letter-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+        }
+
+        .letter-item:last-child {
+            border-bottom: none;
+        }
+
+        .hebrew {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <a class="back-link" href="index.html">← Back</a>
+        <h1>Hebrew Letters</h1>
+
+        <div class="alphabet-list">
+            <div class="letter-item"><span class="hebrew">א</span><span>Aleph</span></div>
+            <div class="letter-item"><span class="hebrew">ב</span><span>Bet</span></div>
+            <div class="letter-item"><span class="hebrew">ג</span><span>Gimel</span></div>
+            <div class="letter-item"><span class="hebrew">ד</span><span>Dalet</span></div>
+            <div class="letter-item"><span class="hebrew">ה</span><span>Hei</span></div>
+            <div class="letter-item"><span class="hebrew">ו</span><span>Vav</span></div>
+            <div class="letter-item"><span class="hebrew">ז</span><span>Zayin</span></div>
+            <div class="letter-item"><span class="hebrew">ח</span><span>Het</span></div>
+            <div class="letter-item"><span class="hebrew">ט</span><span>Tet</span></div>
+            <div class="letter-item"><span class="hebrew">י</span><span>Yod</span></div>
+            <div class="letter-item"><span class="hebrew">כ</span><span>Kaf</span></div>
+            <div class="letter-item"><span class="hebrew">ל</span><span>Lamed</span></div>
+            <div class="letter-item"><span class="hebrew">מ</span><span>Mem</span></div>
+            <div class="letter-item"><span class="hebrew">נ</span><span>Nun</span></div>
+            <div class="letter-item"><span class="hebrew">ס</span><span>Samekh</span></div>
+            <div class="letter-item"><span class="hebrew">ע</span><span>Ayin</span></div>
+            <div class="letter-item"><span class="hebrew">פ</span><span>Pe</span></div>
+            <div class="letter-item"><span class="hebrew">צ</span><span>Tsade</span></div>
+            <div class="letter-item"><span class="hebrew">ק</span><span>Qof</span></div>
+            <div class="letter-item"><span class="hebrew">ר</span><span>Resh</span></div>
+            <div class="letter-item"><span class="hebrew">ש</span><span>Shin</span></div>
+            <div class="letter-item"><span class="hebrew">ת</span><span>Tav</span></div>
+        </div>
+    </div>
+</body>
+</html>
