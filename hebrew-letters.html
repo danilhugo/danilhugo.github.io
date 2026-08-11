@@ -51,8 +51,16 @@
             gap: 12px;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
-            font-size: 18px;
+            font-size: 22px;
         }
+
+        /* Each letter row line span item height and alignment */
+        .letter-item span {
+    display: block;
+    float: left;
+    text-align: left;
+    line-height: 40px;
+}
 
         /* Remove the bottom border for the last item */
         .letter-item:last-child {
@@ -61,7 +69,7 @@
 
         /* Styling for the Hebrew character to make it bold and large */
         .hebrew {
-            font-size: 24px;
+            font-size: 40px;
             font-weight: bold;
         }
 
@@ -72,13 +80,16 @@
             color: #2563eb;
             text-decoration: none;
             font-weight: 600;
+                border: 2px solid;
+    padding: 1%;
+    border-radius: 15px;
         }
     </style>
 </head>
 <body>
     <div class="page">
         <!-- Navigation link back to the homepage -->
-        <a class="back-link" href="index.html">← Back</a>
+        <a class="back-link" href="hebrew-index.html">← Back</a>
         <h1>Hebrew Letters</h1>
 
         <!-- Scrollable list of Hebrew letters with their English names -->
